@@ -1,0 +1,28 @@
+.timer {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.display input {
+    margin-bottom: 10px;
+    padding: 5px;
+    font-size: 16px;
+    width: 100px;
+}
+
+.display button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.display button:last-child {
+    margin-right: 0;
+}
+
+.timerDisplay {
+    margin-top: 10px;
+    font-size: 24px;
+}
