@@ -7,8 +7,8 @@ import Home from '../pages/Home'
 const Mainroutes = () => {
     return (
         <Routes>
-            <Route path='/home' element={<Home/>}/>
-            <Route path='/stopwatch' element={<Stopwatch/>} />
+            <Route path='/' element={<Home />} />
+            <Route path='/stopwatch' element={<Stopwatch />} />
             <Route path='/timer' element={<Timer />} />
         </Routes>
     )
