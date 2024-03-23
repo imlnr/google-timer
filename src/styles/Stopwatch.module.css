@@ -48,3 +48,12 @@
     flex-direction: column;
     align-items: flex-start;
 }
+.inputext{
+    width: 90%;
+    height: 200px;
+    background-color: transparent;
+    color: white;
+    font-size: 200px;
+    border: none;
+    cursor: none;
+}
