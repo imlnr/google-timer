@@ -1,8 +1,7 @@
 .stopwatch {
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
     border-radius: 5px;
-    padding: 20px;
-    margin-bottom: 20px;
+    height: 100%;
 }
 
 .display {
@@ -22,4 +21,14 @@
 
 .controls button:last-child {
     margin-right: 0;
+}
+.secondstimer{
+    font-size: 50px;
+}
+.s{
+    font-size: 30px;
+}
+.colon{
+    font-size: 45px;
+    margin: 0 5px;
 }

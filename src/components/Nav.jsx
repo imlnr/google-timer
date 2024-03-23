@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import '../styles/Home.css'
-import Mainroutes from '../allroutes/Mainroutes'
+// import Mainroutes from '../allroutes/Mainroutes'
+import Timer from '../pages/Timer';
+import Stopwatch from '../pages/Stopwatch';
 const Nav = () => {
     const [clickTimer, setClickTimer] = useState(false);
     const [clickStopwatch, setClickStopwatch] = useState(false);
@@ -25,7 +27,9 @@ const Nav = () => {
                 </span> STOPWATCH</div>
             </div>
             <div className='timer-stuff'>
-                <Mainroutes />
+                {/* <Mainroutes /> */}
+                {clickTimer && <Timer/>}
+                {clickStopwatch && <Stopwatch/>}
             </div>
         </div>
     )

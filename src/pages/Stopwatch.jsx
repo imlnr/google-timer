@@ -1,76 +1,56 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../styles/Stopwatch.module.css';
 
-class Stopwatch extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      seconds: 0,
-      milliseconds: 0,
-      isRunning: false,
-    };
-    this.intervalId = null;
-  }
+function Stopwatch() {
+  const [seconds, setSeconds] = useState(0);
+  const [milliseconds, setMilliseconds] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+  let intervalId = null;
 
-  componentWillUnmount() {
-    clearInterval(this.intervalId);
-  }
+  useEffect(() => {
+    return () => clearInterval(intervalId);
+  }, []);
 
-  startStopwatch = () => {
-    if (!this.state.isRunning) {
-      this.intervalId = setInterval(this.tick, 10);
+  const startStopwatch = () => {
+    if (!isRunning) {
+      intervalId = setInterval(tick, 10);
     } else {
-      clearInterval(this.intervalId);
+      clearInterval(intervalId);
     }
-    this.setState((prevState) => ({
-      isRunning: !prevState.isRunning,
-    }));
+    setIsRunning(prevState => !prevState);
   };
 
-  resetStopwatch = () => {
-    clearInterval(this.intervalId);
-    this.setState({
-      seconds: 0,
-      milliseconds: 0,
-      isRunning: false,
-    });
+  const resetStopwatch = () => {
+    clearInterval(intervalId);
+    setSeconds(0);
+    setMilliseconds(0);
+    setIsRunning(false);
   };
 
-  tick = () => {
-    this.setState((prevState) => {
-      let { seconds, milliseconds } = prevState;
-      milliseconds += 1;
-      if (milliseconds === 100) {
-        milliseconds = 0;
-        seconds += 1;
+  const tick = () => {
+    setMilliseconds(prevMilliseconds => {
+      let updatedMilliseconds = prevMilliseconds + 1;
+      if (updatedMilliseconds === 100) {
+        setSeconds(prevSeconds => prevSeconds + 1);
+        updatedMilliseconds = 0;
       }
-      return {
-        seconds,
-        milliseconds,
-      };
+      return updatedMilliseconds;
     });
   };
 
-  render() {
-    const { seconds, milliseconds, isRunning } = this.state;
-    return (
-      <div className={styles.stopwatch}>
-        <h2>Stopwatch</h2>
-        <div className={styles.display}>
-          <span>{seconds < 10 ? `0${seconds}` : seconds}</span>:
-          <span>
-            {milliseconds < 10 ? `0${milliseconds}` : milliseconds}
-          </span>
-        </div>
-        <div className={styles.controls}>
-          <button onClick={this.startStopwatch}>
-            {isRunning ? 'Stop' : 'Start'}
-          </button>
-          <button onClick={this.resetStopwatch}>Reset</button>
-        </div>
+  return (
+    <div className={styles.stopwatch}>
+      {/* <h2>Stopwatch</h2> */}
+      <div className={styles.display}>
+        <span className={styles.secondstimer}>{seconds < 10 ? `0${seconds}` : seconds}<span className={styles.s}>s</span></span> <span className={styles.colon}>:</span>
+        <span className={styles.secondstimer}>{milliseconds < 10 ? `0${milliseconds}` : milliseconds}<span className={styles.s}>s</span></span>
       </div>
-    );
-  }
+      <div className={styles.controls}>
+        <button onClick={startStopwatch}>{isRunning ? 'Stop' : 'Start'}</button>
+        <button onClick={resetStopwatch}>Reset</button>
+      </div>
+    </div>
+  );
 }
 
 export default Stopwatch;
