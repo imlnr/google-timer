@@ -1,79 +1,57 @@
-import React, { Component } from 'react';
-import styles from '../styles/Timer.module.css';
+import React, { useState, useEffect } from 'react';
 
-class Timer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      seconds: 0,
-      inputSeconds: '',
-      isRunning: false,
-    };
-    this.intervalId = null;
-  }
+function Timer() {
+  const [time, setTime] = useState(300); // 5 minutes in seconds
+  const [inputVisible, setInputVisible] = useState(false);
+  const [newTime, setNewTime] = useState('');
 
-  componentWillUnmount() {
-    clearInterval(this.intervalId);
-  }
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(prevTime => prevTime - 1);
+    }, 1000);
 
-  handleInputChange = (e) => {
-    this.setState({ inputSeconds: e.target.value });
+    return () => clearInterval(timer);
+  }, []);
+
+  const toggleInputVisibility = () => {
+    setInputVisible(prev => !prev);
   };
 
-  startTimer = () => {
-    const { inputSeconds, isRunning } = this.state;
-    if (!isRunning && inputSeconds !== '') {
-      this.intervalId = setInterval(this.tick, 1000);
-      this.setState({ isRunning: true });
-    }
+  const handleInputChange = event => {
+    setNewTime(event.target.value);
   };
 
-  stopTimer = () => {
-    clearInterval(this.intervalId);
-    this.setState({ isRunning: false });
+  const handleSubmit = event => {
+    event.preventDefault();
+    setTime(parseInt(newTime) * 60);
+    setInputVisible(false);
   };
 
-  resetTimer = () => {
-    clearInterval(this.intervalId);
-    this.setState({
-      seconds: 0,
-      inputSeconds: '',
-      isRunning: false,
-    });
+  const formatTime = seconds => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
 
-  tick = () => {
-    this.setState((prevState) => ({
-      seconds: prevState.seconds + 1,
-    }));
-  };
-
-  render() {
-    const { seconds, inputSeconds, isRunning } = this.state;
-    return (
-      <div className={styles.timer}>
-        <h2>Timer</h2>
-        <div className={styles.display}>
-          <input
-            type="number"
-            value={inputSeconds}
-            onChange={this.handleInputChange}
-            placeholder="Enter time in seconds"
-          />
-          <button onClick={this.startTimer} disabled={isRunning}>
-            Start
-          </button>
-          <button onClick={this.stopTimer} disabled={!isRunning}>
-            Stop
-          </button>
-          <button onClick={this.resetTimer}>Reset</button>
-        </div>
-        <div className={styles.timerDisplay}>
-          <span>{seconds}</span>
-        </div>
+  return (
+    <div>
+      <div onClick={toggleInputVisibility}>
+        {inputVisible ? (
+          <form onSubmit={handleSubmit}>
+            <input
+              type="number"
+              value={newTime}
+              onChange={handleInputChange}
+              placeholder="Enter time in minutes"
+            />
+            <button type="submit">Set Timer</button>
+          </form>
+        ) : (
+          <div>{formatTime(time)}</div>
+        )}
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Timer;
