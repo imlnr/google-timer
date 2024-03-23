@@ -28,8 +28,8 @@ const Nav = () => {
             </div>
             <div className='timer-stuff'>
                 {/* <Mainroutes /> */}
-                {clickTimer && <Timer/>}
-                {clickStopwatch && <Stopwatch/>}
+                {clickTimer && <Timer />}
+                {clickStopwatch && <Stopwatch />}
             </div>
         </div>
     )
