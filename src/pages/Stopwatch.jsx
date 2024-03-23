@@ -40,7 +40,6 @@ function Stopwatch() {
 
   return (
     <div className={styles.stopwatch}>
-      {/* <h2>Stopwatch</h2> */}
       <div className={styles.display}>
         <span className={styles.secondstimer}>{seconds < 10 ? `0${seconds}` : seconds}<span className={styles.s}>s</span></span> <span className={styles.colon}>:</span>
         <span className={styles.secondstimer}>{milliseconds < 10 ? `0${milliseconds}` : milliseconds}<span className={styles.s}>s</span></span>
