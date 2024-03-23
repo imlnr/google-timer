@@ -43,7 +43,7 @@ function Stopwatch() {
       <div className={styles.stopwatchinn}>
         <span className={styles.display}>
           <span className={styles.secondstimer}>{seconds < 10 ? `0${seconds}` : seconds}<span className={styles.s}>s</span></span> <span className={styles.colon}>:</span>
-          <span className={styles.secondstimer}>{milliseconds < 10 ? `0${milliseconds}` : milliseconds}<span className={styles.s}>s</span></span>
+          <span className={styles.secondstimer}>{milliseconds < 10 ? `0${milliseconds}` : milliseconds}<span className={styles.s}>ms</span></span>
         </span>
         <div className={styles.controls}>
           <button onClick={startStopwatch}>{isRunning ? 'Stop' : 'Start'}</button>
