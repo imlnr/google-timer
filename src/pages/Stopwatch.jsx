@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from '../styles/Stopwatch.module.css';
 
 function Stopwatch() {
   const [seconds, setSeconds] = useState(0);
   const [milliseconds, setMilliseconds] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  let intervalId = null;
+  const intervalIdRef = useRef(null);
 
   useEffect(() => {
-    return () => clearInterval(intervalId);
+    return () => clearInterval(intervalIdRef.current);
   }, []);
 
   const startStopwatch = () => {
     if (!isRunning) {
-      intervalId = setInterval(tick, 10);
+      intervalIdRef.current = setInterval(tick, 10);
     } else {
-      clearInterval(intervalId);
+      clearInterval(intervalIdRef.current);
     }
     setIsRunning(prevState => !prevState);
   };
 
   const resetStopwatch = () => {
-    clearInterval(intervalId);
+    clearInterval(intervalIdRef.current);
     setSeconds(0);
     setMilliseconds(0);
     setIsRunning(false);
@@ -40,13 +40,15 @@ function Stopwatch() {
 
   return (
     <div className={styles.stopwatch}>
-      <div className={styles.display}>
-        <span className={styles.secondstimer}>{seconds < 10 ? `0${seconds}` : seconds}<span className={styles.s}>s</span></span> <span className={styles.colon}>:</span>
-        <span className={styles.secondstimer}>{milliseconds < 10 ? `0${milliseconds}` : milliseconds}<span className={styles.s}>s</span></span>
-      </div>
-      <div className={styles.controls}>
-        <button onClick={startStopwatch}>{isRunning ? 'Stop' : 'Start'}</button>
-        <button onClick={resetStopwatch}>Reset</button>
+      <div className={styles.stopwatchinn}>
+        <span className={styles.display}>
+          <span className={styles.secondstimer}>{seconds < 10 ? `0${seconds}` : seconds}<span className={styles.s}>s</span></span> <span className={styles.colon}>:</span>
+          <span className={styles.secondstimer}>{milliseconds < 10 ? `0${milliseconds}` : milliseconds}<span className={styles.s}>s</span></span>
+        </span>
+        <div className={styles.controls}>
+          <button onClick={startStopwatch}>{isRunning ? 'Stop' : 'Start'}</button>
+          <button onClick={resetStopwatch}>Reset</button>
+        </div>
       </div>
     </div>
   );
